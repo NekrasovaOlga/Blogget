@@ -1,20 +1,20 @@
-import React from "react";
-import style from "./Header.module.scss";
+import React from 'react';
+import style from './Header.module.scss';
 
-import Layout from "../Layout";
+import Layout from '../Layout';
 
-import Auth from "./Auth";
-import Logo from "./Logo";
-import Search from "./Search";
-import Heading from "./Heading";
+import Auth from './Auth';
+import Logo from './Logo';
+import Search from './Search';
+import Heading from './Heading';
 
 export const Header = () => {
   return (
-    <header>
+    <header className={style.header}>
       <Layout>
         <div className={style.gridContainer}>
           <Logo />
-          <Heading text="Главная" />
+          <Heading text="Главна1я" />
           <Search />
           <Auth />
         </div>

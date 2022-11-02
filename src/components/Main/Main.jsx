@@ -1,12 +1,17 @@
-import React from "react";
-import style from "./Main.module.scss";
+import React from 'react';
+import style from './Main.module.scss';
 
-import Layout from "../Layout";
+import Layout from '../Layout';
+import Tabs from './Tabs';
+import List from './List';
 
 export const Main = (props) => {
   return (
     <main>
-      <Layout></Layout>
+      <Layout>
+        <Tabs />
+        <List />
+      </Layout>
     </main>
   );
 };
