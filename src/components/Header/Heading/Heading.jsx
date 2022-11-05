@@ -1,20 +1,16 @@
 import React from 'react';
 import style from './Heading.module.scss';
+import { Text } from '../../../UI/Text';
 
 import PropTypes from 'prop-types';
 
-export class Heading extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: this.props.text,
-    };
-  }
-
-  render() {
-    return <h1 className={style.heading}>{this.state.title}</h1>;
-  }
-}
+export const Heading = ({ text }) => {
+  return (
+    <Text As="h1" size="22" tsize="26" className={style.heading}>
+      {text}
+    </Text>
+  );
+};
 
 Heading.propTypes = {
   text: PropTypes.string,

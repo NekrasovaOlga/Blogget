@@ -1,12 +1,21 @@
 import React from 'react';
 import style from './Title.module.scss';
+import { Text } from '../../../../../UI/Text';
 
 export const Title = ({ title }) => {
   return (
     <h2 className={style.title}>
-      <a className={style.linkPost} href="/">
+      <Text
+        As="a"
+        size="26"
+        tsize="32"
+        dsize="18"
+        fontWeight="bold"
+        className={style.linkPost}
+        href="/"
+      >
         {title}
-      </a>
+      </Text>
     </h2>
   );
 };
