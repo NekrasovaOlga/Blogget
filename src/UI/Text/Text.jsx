@@ -36,15 +36,16 @@ export const Text = (props) => {
 Text.propTypes = {
   As: PropTypes.string,
   color: PropTypes.string,
-  size: PropTypes.number,
-  tsize: PropTypes.number,
-  dsize: PropTypes.number,
+  size: PropTypes.string,
+  tsize: PropTypes.string,
+  dsize: PropTypes.string,
   fontWeight: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,
     PropTypes.object,
+    PropTypes.number,
   ]),
   href: PropTypes.string,
 };

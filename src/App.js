@@ -1,15 +1,13 @@
-import React from "react";
+import Header from './components/Header';
+import Main from './components/Main';
 
-import Header from "./components/Header";
-import Main from "./components/Main";
-
-function App() {
+import { useToken } from './hooks/useToken';
+export const App = () => {
+  const [token] = useToken('');
   return (
-    <React.Fragment>
-      <Header />
+    <div>
+      <Header token={token} />
       <Main />
-    </React.Fragment>
+    </div>
   );
-}
-
-export default App;
+};

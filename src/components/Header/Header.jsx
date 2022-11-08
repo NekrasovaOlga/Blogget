@@ -8,7 +8,7 @@ import Logo from './Logo';
 import Search from './Search';
 import Heading from './Heading';
 
-export const Header = () => {
+export const Header = ({ token }) => {
   return (
     <header className={style.header}>
       <Layout>
@@ -16,7 +16,7 @@ export const Header = () => {
           <Logo />
           <Heading text="Главная" />
           <Search />
-          <Auth />
+          <Auth token={token} />
         </div>
       </Layout>
     </header>
