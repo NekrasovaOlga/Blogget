@@ -6,10 +6,10 @@ import { URL } from '../../../api/const';
 import { Text } from '../../../UI/Text/Text';
 import { ReactComponent as AuthIcon } from './img/auth.svg';
 
-export const Auth = ({ token }) => {
+export const Auth = ({ token, delToken }) => {
   const [auth, setAuth] = useState({});
   const [logout, setLogout] = useState(false);
-
+  console.log(delToken);
   useEffect(() => {
     if (!token) return;
     fetch(`${URL}/api/v1/me`, {
@@ -18,10 +18,13 @@ export const Auth = ({ token }) => {
       },
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        //const img = iconImg.replace(/\?.*$/, '');
-        //setAuth({ name: data.name, img: '' });
+      .then(({ name, icon_img: iconImg }) => {
+        const img = iconImg.replace(/\?.*$/, '');
+        setAuth({ name, img });
+      })
+      .catch((err) => {
+        setAuth({});
+        delToken();
       });
   }, [token]);
 
@@ -47,7 +50,8 @@ export const Auth = ({ token }) => {
               className={style.logout}
               onClick={() => {
                 setLogout(false);
-                //setAuth({});
+                setAuth({});
+                delToken();
               }}
             >
               Выйти

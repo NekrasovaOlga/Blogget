@@ -3,10 +3,11 @@ import Main from './components/Main';
 
 import { useToken } from './hooks/useToken';
 export const App = () => {
-  const [token] = useToken('');
+  const [token, delToken] = useToken('');
+
   return (
     <div>
-      <Header token={token} />
+      <Header token={token} delToken={delToken} />
       <Main />
     </div>
   );

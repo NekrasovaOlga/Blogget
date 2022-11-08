@@ -12,7 +12,25 @@ export const useToken = (state) => {
       );
       setToken(token);
     }
+    if (localStorage.getItem('bearer')) {
+      setToken(localStorage.getItem('bearer'));
+    } else {
+    }
   }, []);
 
-  return [token];
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('bearer', token);
+    }
+  }, [token]);
+
+  const delToken = () => {
+    localStorage.setItem('bearer', '');
+    setToken('');
+
+    return token;
+  };
+
+  const result = [token, delToken];
+  return result;
 };
