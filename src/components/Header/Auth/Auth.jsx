@@ -1,32 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState, useContext } from 'react';
 import style from './Auth.module.scss';
 import { urlAuth } from '../../../api/auth';
-import { URL } from '../../../api/const';
 
 import { Text } from '../../../UI/Text/Text';
 import { ReactComponent as AuthIcon } from './img/auth.svg';
+import { tokenContext } from '../../context/token';
+import { authContext } from '../../context/authContext';
 
-export const Auth = ({ token, delToken }) => {
-  const [auth, setAuth] = useState({});
+export const Auth = () => {
+  const { delToken } = useContext(tokenContext);
   const [logout, setLogout] = useState(false);
-  console.log(delToken);
-  useEffect(() => {
-    if (!token) return;
-    fetch(`${URL}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then(({ name, icon_img: iconImg }) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({ name, img });
-      })
-      .catch((err) => {
-        setAuth({});
-        delToken();
-      });
-  }, [token]);
+
+  const { auth, clearAuth } = useContext(authContext);
 
   return (
     <div className={style.container}>
@@ -50,7 +35,7 @@ export const Auth = ({ token, delToken }) => {
               className={style.logout}
               onClick={() => {
                 setLogout(false);
-                setAuth({});
+                clearAuth();
                 delToken();
               }}
             >
