@@ -3,13 +3,16 @@ import Header from './components/Header';
 import Main from './components/Main';
 import { AuthContextProvider } from './components/context/authContext';
 import { TokenContextProvider } from './components/context/token';
+import { PostsContextProvider } from './components/context/postsContext';
 
 export const App = () => {
   return (
     <TokenContextProvider>
       <AuthContextProvider>
-        <Header />
-        <Main />
+        <PostsContextProvider>
+          <Header />
+          <Main />
+        </PostsContextProvider>
       </AuthContextProvider>
     </TokenContextProvider>
   );
