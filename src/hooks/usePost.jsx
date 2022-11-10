@@ -20,11 +20,11 @@ export const usePost = () => {
         return response.json();
       })
       .then(({ data }) => {
-        console.log(data);
-        // тут перестал приходить children
         setPost(data.children);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   }, [token]);
 
   return [post, setPost];
