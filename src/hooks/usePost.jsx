@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { URL } from '../api/const';
 
 export const usePost = () => {
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.token.token);
 
   const [post, setPost] = useState({});
 

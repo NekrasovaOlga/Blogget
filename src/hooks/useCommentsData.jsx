@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { URL } from '../api/const';
 
 export const useCommentsData = (id) => {
-  const token = useSelector((state) => state.token);
+  const token = useSelector((state) => state.token.token);
   const [CommentsData, setCommentsData] = useState({ post: {}, comments: {} });
   useEffect(() => {
     if (!token) return;

@@ -1,8 +1,10 @@
 import React from 'react';
 import style from './Comments.module.scss';
 import { Text } from '../../../UI/Text/Text';
+import fromDate from '../../utils/formatDate';
 
 export const Comments = ({ comments }) => {
+  console.log(comments);
   return (
     <>
       {comments.length > 0 ? (
@@ -16,6 +18,7 @@ export const Comments = ({ comments }) => {
                 <Text As="p" className={style.comment} size="14" tsize="18">
                   {data.body}
                 </Text>
+                <Text As="time">{fromDate(data.created)} </Text>
               </li>
             );
           })}

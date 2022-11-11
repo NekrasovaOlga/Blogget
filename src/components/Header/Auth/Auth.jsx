@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import style from './Auth.module.scss';
 import { urlAuth } from '../../../api/auth';
 import { useDispatch } from 'react-redux';
-import { deleteToken } from '../../../store';
+import { deleteToken } from '../../../store/tokenReducer';
 import { Text } from '../../../UI/Text/Text';
 import { ReactComponent as AuthIcon } from './img/auth.svg';
 import { authContext } from '../../context/authContext';
