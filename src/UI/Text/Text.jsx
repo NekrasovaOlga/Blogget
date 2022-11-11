@@ -15,6 +15,7 @@ export const Text = (props) => {
     className,
     children,
     href,
+    onClick,
   } = props;
 
   const classes = classNames(
@@ -27,7 +28,7 @@ export const Text = (props) => {
   );
 
   return (
-    <As className={classes} href={href}>
+    <As className={classes} href={href} onClick={onClick}>
       {children}
     </As>
   );
