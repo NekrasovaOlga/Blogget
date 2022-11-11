@@ -36,7 +36,6 @@ export const Modal = ({ setIsModalOpen, id }) => {
       document.removeEventListener('keydown', handleKeydownClick);
     };
   }, []);
-  console.log(markdown);
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>

@@ -6,7 +6,6 @@ import Post from './Post';
 export const List = () => {
   const { post } = useContext(postsContext);
   const postDatas = [];
-  console.log(post);
   if (post.length > 0) {
     post.forEach((item) => {
       const itemPost = item.data;
