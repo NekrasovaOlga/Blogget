@@ -6,18 +6,20 @@ import ReactDOM from 'react-dom';
 import { useCommentsData } from './../../hooks/useCommentsData';
 import Comments from './Comments';
 import FormComment from './FormComment';
+import { useDispatch } from 'react-redux';
+import { removeModal } from '../../store/modal/modalAction';
 
-export const Modal = ({ setIsModalOpen, id }) => {
-  const [{ post, comments }] = useCommentsData(id);
-
+export const Modal = ({ setIsModalOpen }) => {
+  const dispatch = useDispatch();
+  const [{ post, comments }, status] = useCommentsData();
   const { title, author, selftext: markdown, url } = post;
-
   const overlayRef = useRef(null);
 
   const handleClick = (e) => {
     const target = e.target;
     if (target === overlayRef.current) {
       setIsModalOpen();
+      dispatch(removeModal());
     }
   };
 
@@ -25,6 +27,7 @@ export const Modal = ({ setIsModalOpen, id }) => {
     e = e || window.event;
     if (e.keyCode === 27) {
       setIsModalOpen(false);
+      dispatch(removeModal());
     }
   };
 
@@ -39,7 +42,10 @@ export const Modal = ({ setIsModalOpen, id }) => {
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {title ? (
+        {status === 'loading' && <p>Загрузка</p>}
+        {status === 'error' && <p>Ошибка</p>}
+
+        {status === 'loaded' && (
           <>
             {' '}
             <h2 className={style.title}>{title}</h2>
@@ -69,13 +75,12 @@ export const Modal = ({ setIsModalOpen, id }) => {
               className={style.close}
               onClick={() => {
                 setIsModalOpen(false);
+                dispatch(removeModal());
               }}
             >
               <CloseIcon />
             </button>
           </>
-        ) : (
-          <p>Загрузка...</p>
         )}
       </div>
     </div>,

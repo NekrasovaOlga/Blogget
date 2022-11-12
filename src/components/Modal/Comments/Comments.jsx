@@ -4,7 +4,6 @@ import { Text } from '../../../UI/Text/Text';
 import fromDate from '../../utils/formatDate';
 
 export const Comments = ({ comments }) => {
-  console.log(comments);
   return (
     <>
       {comments.length > 0 ? (
