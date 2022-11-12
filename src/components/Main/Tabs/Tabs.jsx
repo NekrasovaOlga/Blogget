@@ -10,27 +10,33 @@ import { ReactComponent as HomeIcon } from './img/home.svg';
 import { ReactComponent as BestIcon } from './img/best.svg';
 import { ReactComponent as HotIcon } from './img/hot.svg';
 import { ReactComponent as TopIcon } from './img/top.svg';
+import { useNavigate } from 'react-router-dom';
 
 const LIST = [
   {
     value: 'Главная',
     Icon: HomeIcon,
+    link: 'rising',
   },
   {
     value: 'Топ',
     Icon: BestIcon,
+    link: 'top',
   },
   {
     value: 'Лучшие',
     Icon: HotIcon,
+    link: 'best',
   },
   {
     value: 'Горячие',
     Icon: TopIcon,
+    link: 'hot',
   },
 ].map(assignId);
 
 export const Tabs = () => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [titleName, setTitleName] = useState('Главная');
   const [isDropdown, setIsDropdown] = useState(false);
@@ -70,11 +76,12 @@ export const Tabs = () => {
 
       {(isDropdownOpen || isDropdown) && (
         <ul className={style.list}>
-          {LIST.map(({ value, id, Icon }) => (
+          {LIST.map(({ value, id, link, Icon }) => (
             <li key={id} className={style.item}>
               <button
                 className={style.btn}
                 onClick={() => {
+                  navigate(`/category/${link}`);
                   setTitleName(value);
                   setIsDropdownOpen(!isDropdownOpen);
                 }}

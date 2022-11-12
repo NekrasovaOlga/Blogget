@@ -4,6 +4,7 @@ import {
   MODAL_REQUEST_SUCCESS,
   UPDATE_MODAL,
   REMOVE_MODAL,
+  RENDER_MODAL,
 } from './modalAction';
 
 const initialState = {
@@ -47,6 +48,11 @@ export const modalReducer = (state = initialState, action) => {
         ...state,
         data: { post: {}, comments: {} },
         status: 'loading',
+      };
+    case RENDER_MODAL:
+      return {
+        ...state,
+        id: action.id,
       };
     default:
       return state;

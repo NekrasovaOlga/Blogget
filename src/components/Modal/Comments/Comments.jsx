@@ -5,11 +5,11 @@ import fromDate from '../../utils/formatDate';
 
 export const Comments = ({ comments }) => {
   return (
-    <>
+    <ul className={style.list}>
       {comments.length > 0 ? (
-        <ul className={style.list}>
-          {comments.map((data) => {
-            return (
+        comments.map(
+          (data) =>
+            data.body && (
               <li key={data.id} className={style.item}>
                 <Text As="h3" className={style.author} size="18" tsize="22">
                   {data.name}
@@ -19,12 +19,11 @@ export const Comments = ({ comments }) => {
                 </Text>
                 <Text As="time">{fromDate(data.created)} </Text>
               </li>
-            );
-          })}
-        </ul>
+            )
+        )
       ) : (
         <p>Нет комментариев</p>
       )}
-    </>
+    </ul>
   );
 };

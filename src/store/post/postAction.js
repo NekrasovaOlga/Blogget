@@ -4,6 +4,8 @@ import { URL } from '../../api/const';
 export const POST_REQUEST = 'POST_REQUEST';
 export const POST_REQUEST_SUCCESS = 'POST_REQUEST_SUCCESS';
 export const POST_REQUEST_ERROR = 'POST_REQUEST_ERROR';
+export const POST_REQUEST_SUCCESS_AFTER = 'POST_REQUEST_SUCCESS_AFTER';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const postRequest = () => ({
   type: POST_REQUEST,
@@ -11,7 +13,14 @@ export const postRequest = () => ({
 
 export const postRequestSuccess = (data) => ({
   type: POST_REQUEST_SUCCESS,
-  data,
+  data: data.children,
+  after: data.after,
+});
+
+export const postRequestSuccessAfter = (data) => ({
+  type: POST_REQUEST_SUCCESS_AFTER,
+  data: data.children,
+  after: data.after,
 });
 
 export const postRequestError = (error) => ({
@@ -19,19 +28,38 @@ export const postRequestError = (error) => ({
   error,
 });
 
-export const postRequestAsync = () => (dispatch, getState) => {
+export const changePage = (page) => ({
+  type: CHANGE_PAGE,
+  page,
+});
+
+export const postRequestAsync = (newPage) => (dispatch, getState) => {
+  let page = getState().post.page;
+
+  if (newPage) {
+    page = newPage;
+    dispatch(changePage(page));
+  }
+
   const token = getState().token.token;
-  if (!token) return;
+  const after = getState().post.after;
+  const loading = getState().post.loading;
+  const isLast = getState().post.isLast;
+
+  if (!token || loading || isLast) return;
   dispatch(postRequest());
-  if (!token) return;
-  axios(`${URL}/best?limit=35`, {
+
+  axios(`${URL}/${page}?limit=10${after ? `&after=${after}` : ''}`, {
     headers: {
       Authorization: `bearer ${token}`,
     },
   })
-    .then(({ data: { data: dataPosts } }) => {
-      const { children } = dataPosts;
-      dispatch(postRequestSuccess(children));
+    .then(({ data }) => {
+      if (!after) {
+        dispatch(postRequestSuccess(data.data));
+      } else {
+        dispatch(postRequestSuccessAfter(data.data));
+      }
     })
     .catch((err) => {
       dispatch(postRequestError(err));

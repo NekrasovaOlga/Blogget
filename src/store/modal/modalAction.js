@@ -6,6 +6,7 @@ export const MODAL_REQUEST_SUCCESS = 'MODAL_REQUEST_SUCCESS';
 export const MODAL_REQUEST_ERROR = 'MODAL_REQUEST_ERROR';
 export const UPDATE_MODAL = 'UPDATE_MODAL';
 export const REMOVE_MODAL = 'REMOVE_MODAL';
+export const RENDER_MODAL = 'RENDER_MODAL';
 
 export const modalRequest = (id) => ({
   type: MODAL_REQUEST,
@@ -32,11 +33,24 @@ export const removeModal = (data) => ({
   data,
 });
 
-export const modalRequestAsync = () => (dispatch, getState) => {
-  const token = getState().token.token;
-  const id = getState().modal.id;
+export const renderModal = (id) => ({
+  type: RENDER_MODAL,
+  id,
+});
 
-  if (!token) return;
+export const modalRequestAsync = (newId) => (dispatch, getState) => {
+  let id = getState().modal.id;
+
+  if (newId) {
+    id = newId;
+    dispatch(renderModal(id));
+  }
+
+  const token = getState().token.token;
+  const loading = getState().modal.loading;
+  if (!token || loading) return;
+  dispatch(modalRequest());
+
   axios(`${URL}/comments/${id}`, {
     headers: {
       Authorization: `bearer ${token}`,

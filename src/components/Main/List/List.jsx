@@ -1,36 +1,50 @@
 import style from './List.module.scss';
-
 import Post from './Post';
-import { usePost } from '../../../hooks/usePost';
-import Loader from '../../../UI/Loader';
+import { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postRequestAsync } from '../../../store/post/postAction';
+import { Outlet, useParams } from 'react-router-dom';
 
 export const List = () => {
-  const [post, loading] = usePost();
-  console.log(loading);
-  const postDatas = [];
-  post.forEach((item) => {
-    const itemPost = item.data;
-    const { id, title, author, ups, created, thumbnail } = itemPost;
-    const newPost = {
-      id,
-      title,
-      author,
-      ups,
-      date: created,
-      img: thumbnail,
+  const post = useSelector((state) => state.post.data);
+
+  const endList = useRef(null);
+  const { page } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(postRequestAsync(page));
+  }, [page]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          dispatch(postRequestAsync());
+        }
+      },
+      {
+        rootMargin: '100px',
+      }
+    );
+    observer.observe(endList.current);
+
+    return () => {
+      if (endList.current) {
+        observer.unobserve(endList.current);
+      }
     };
-    postDatas.push(newPost);
-  });
+  }, [endList.current]);
 
   return (
-    <ul className={style.list}>
-      {loading === true ? (
-        <Loader />
-      ) : (
-        postDatas.map((postData, index) => (
-          <Post key={index} postData={postData} />
-        ))
-      )}
-    </ul>
+    <>
+      <ul className={style.list}>
+        {post.map((item, index) => (
+          <Post key={index} postData={item.data} />
+        ))}
+        <li ref={endList} className={style.end} />
+      </ul>
+      <Outlet />
+    </>
   );
 };
