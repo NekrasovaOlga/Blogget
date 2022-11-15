@@ -20,6 +20,7 @@ export const Main = () => {
           </Route>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Home />} />
           <Route path="/search" element={<SearchList />} />
         </Routes>
       </Layout>
