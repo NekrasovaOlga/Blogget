@@ -1,8 +1,5 @@
 import style from './Title.module.scss';
-import { useDispatch } from 'react-redux';
-
 import { Text } from '../../../../../UI/Text';
-import { updateModal } from '../../../../../store/modal/modalAction';
 import { Link, useParams } from 'react-router-dom';
 
 export const Title = ({ title, id }) => {

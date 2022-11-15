@@ -3,22 +3,24 @@ import style from './Modal.module.scss';
 import Markdown from 'markdown-to-jsx';
 import { ReactComponent as CloseIcon } from './img/close.svg';
 import ReactDOM from 'react-dom';
-import { useCommentsData } from './../../hooks/useCommentsData';
 import Comments from './Comments';
 import FormComment from './FormComment';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalRequestAsync, removeModal } from '../../store/modal/modalAction';
+import { modalRequestAsync } from '../../store/modal/modalAction';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const Modal = () => {
   const { id, page } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(modalRequestAsync(id));
   }, [id]);
-  const { post, comments } = useSelector((state) => state.modal.data);
+
+  const post = useSelector((state) => state.modal.post);
+  const comments = useSelector((state) => state.modal.comments);
   const status = useSelector((state) => state.modal.status);
   const { title, author, selftext: markdown, url } = post;
   const overlayRef = useRef(null);
@@ -26,7 +28,6 @@ export const Modal = () => {
   const handleClick = (e) => {
     const target = e.target;
     if (target === overlayRef.current) {
-      dispatch(removeModal());
       navigate(`/category/${page}`);
     }
   };
@@ -34,7 +35,6 @@ export const Modal = () => {
   const handleKeydownClick = (e) => {
     e = e || window.event;
     if (e.keyCode === 27) {
-      dispatch(removeModal());
       navigate(`/category/${page}`);
     }
   };
@@ -82,7 +82,6 @@ export const Modal = () => {
             <button
               className={style.close}
               onClick={() => {
-                dispatch(removeModal());
                 navigate(`/category/${page}`);
               }}
             >

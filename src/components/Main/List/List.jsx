@@ -7,14 +7,9 @@ import { Outlet, useParams } from 'react-router-dom';
 
 export const List = () => {
   const post = useSelector((state) => state.post.data);
-
   const endList = useRef(null);
   const { page } = useParams();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(postRequestAsync(page));
-  }, [page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,6 +30,10 @@ export const List = () => {
       }
     };
   }, [endList.current]);
+
+  useEffect(() => {
+    dispatch(postRequestAsync(page));
+  }, [page]);
 
   return (
     <>
