@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Modal from '../Modal';
 import NotFound from '../NotFound';
 import Home from '../Home';
+import SearchList from '../Main/List/SearchList';
 
 export const Main = () => {
   return (
@@ -19,6 +20,7 @@ export const Main = () => {
           </Route>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchList />} />
         </Routes>
       </Layout>
     </main>

@@ -3,7 +3,12 @@ import { commentReducer } from './commentReducer';
 import { authReducer } from './auth/authReducer';
 import modalReducer from './modal/modalSlice';
 import postReducer from './post/postSlice';
+import { searchReducer } from '../store/search/searchReducer';
 import { configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './saga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +17,10 @@ export const store = configureStore({
     auth: authReducer,
     modal: modalReducer,
     post: postReducer,
+    search: searchReducer,
   },
-  moddleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(tokenMiddlewere),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(tokenMiddlewere, sagaMiddleware),
 });
+
+sagaMiddleware.run(rootSaga);
